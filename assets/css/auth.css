@@ -1,0 +1,128 @@
+/* Auth Styling */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 20px;
+}
+
+.tron-panel {
+  background-color: rgba(6, 11, 26, 0.8);
+  border: 2px solid var(--tron-blue);
+  border-radius: 6px;
+  padding: 30px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 30px rgba(0, 191, 255, 0.5);
+}
+
+.auth-title {
+  color: var(--tron-cyan);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 10px var(--tron-cyan);
+  letter-spacing: 2px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: var(--tron-blue);
+  font-size: 0.9rem;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.tron-input {
+  background-color: rgba(0, 30, 60, 0.5);
+  border: 1px solid var(--tron-border);
+  border-radius: 4px;
+  color: white;
+  padding: 10px 12px;
+  font-family: 'Orbitron', sans-serif;
+  transition: all 0.3s;
+}
+
+.tron-input:focus {
+  outline: none;
+  border-color: var(--tron-cyan);
+  box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
+
+.invalid-feedback {
+  color: var(--tron-red);
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.login-button {
+  background-color: rgba(0, 191, 255, 0.2);
+}
+
+.register-button {
+  background-color: rgba(0, 255, 159, 0.2);
+}
+
+.back-button {
+  background-color: rgba(255, 0, 60, 0.2);
+}
+
+.guest-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.guest-link {
+  color: var(--tron-yellow);
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.guest-link:hover {
+  text-shadow: 0 0 10px var(--tron-yellow);
+}
+
+.auth-error {
+  background-color: rgba(255, 0, 60, 0.2);
+  border: 1px solid var(--tron-red);
+  color: var(--tron-red);
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .tron-button {
+    width: 100%;
+  }
+}

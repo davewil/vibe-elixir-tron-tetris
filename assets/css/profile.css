@@ -1,0 +1,139 @@
+/* Profile Styling */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.profile-panel {
+  width: 100%;
+  max-width: 800px;
+}
+
+.profile-header {
+  border-bottom: 1px solid var(--tron-border);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-title {
+  color: var(--tron-cyan);
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: 'Orbitron', sans-serif;
+  text-shadow: 0 0 10px var(--tron-cyan);
+  letter-spacing: 2px;
+}
+
+.profile-details {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail .label {
+  font-size: 0.8rem;
+  color: var(--tron-blue);
+  margin-bottom: 5px;
+}
+
+.detail .value {
+  font-size: 1.5rem;
+  color: var(--tron-yellow);
+  text-shadow: 0 0 5px var(--tron-yellow);
+}
+
+.profile-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: var(--tron-green);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  text-shadow: 0 0 5px var(--tron-green);
+}
+
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Reuse some styles from leaderboard */
+.scores-table {
+  margin-bottom: 20px;
+  border: 1px solid var(--tron-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: flex;
+  background-color: rgba(0, 30, 60, 0.7);
+  padding: 10px;
+  font-weight: bold;
+  color: var(--tron-blue);
+  text-shadow: 0 0 5px var(--tron-blue);
+  border-bottom: 1px solid var(--tron-border);
+}
+
+.table-row {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid rgba(29, 53, 87, 0.3);
+  color: white;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  padding: 0 5px;
+  text-align: center;
+}
+
+.col.score {
+  color: var(--tron-yellow);
+  font-weight: bold;
+}
+
+.col.level {
+  color: var(--tron-orange);
+}
+
+.col.lines {
+  color: var(--tron-green);
+}
+
+.empty-state {
+  padding: 30px;
+  text-align: center;
+  color: #8899AA;
+  font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .profile-details {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .col.time {
+    display: none;
+  }
+}
