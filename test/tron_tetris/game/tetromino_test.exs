@@ -81,7 +81,7 @@ defmodule TronTetris.Game.TetrominoTest do
 
     test "wraps rotation after 4 rotations" do
       tetromino = Tetromino.new(:i)
-      
+
       once = Tetromino.rotate(tetromino)
       assert once.rotation == 1
 

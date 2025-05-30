@@ -182,7 +182,9 @@ defmodule TronTetrisWeb.TetrisLive do
 
   @impl true
   def handle_info({:tetris_update, board}, socket) do
-    paused = socket.assigns.paused
+    # Get the current paused state from the server instead of using the old socket state
+    server = Supervisor.server_name(socket.assigns.player_id)
+    {_current_board, paused} = Server.get_state(server)
 
     {:noreply, socket |> assign(:board, board) |> assign(:paused, paused)}
   end

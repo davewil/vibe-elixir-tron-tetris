@@ -6,7 +6,23 @@ defmodule TronTetris.Game.Board do
 
   alias TronTetris.Game.Tetromino
 
-  @type t :: %{
+  @board_width 10
+  @board_height 20
+
+  defstruct [
+    :width,
+    :height,
+    :active_tetromino,
+    :next_tetromino,
+    :landed_tetrominos,
+    :score,
+    :level,
+    :lines_cleared,
+    :game_over,
+    :difficulty
+  ]
+
+  @type t :: %__MODULE__{
           width: integer,
           height: integer,
           active_tetromino: Tetromino.tetromino(),
@@ -19,14 +35,11 @@ defmodule TronTetris.Game.Board do
           difficulty: atom
         }
 
-  @board_width 10
-  @board_height 20
-
   @doc """
   Creates a new game board.
   """
   def new(difficulty \\ :normal) do
-    %{
+    %__MODULE__{
       width: @board_width,
       height: @board_height,
       active_tetromino: Tetromino.new(),
@@ -128,11 +141,11 @@ defmodule TronTetris.Game.Board do
       location: active_tetromino.location,
       rotation: active_tetromino.rotation
     }
-    
+
     # Create a copy with the next rotation value
     next_rotation = rem(original_tetromino.rotation + 1, 4)
     rotated_tetromino = %{original_tetromino | rotation: next_rotation}
-    
+
     # Check if the rotated position would be valid on the board
     if valid_position?(rotated_tetromino, board) do
       # Update the board with the rotated tetromino
@@ -153,34 +166,37 @@ defmodule TronTetris.Game.Board do
   def hard_drop(board) do
     # Find the lowest valid position for the tetromino
     final_y = find_landing_position(board.active_tetromino, board)
-    
+
     if final_y == elem(board.active_tetromino.location, 1) do
       # Tetromino can't move down, just land it
       land_tetromino(board)
     else
       # Move the tetromino to the landing position and then land it
       landed_tetromino = %{
-        board.active_tetromino | 
-        location: {elem(board.active_tetromino.location, 0), final_y}
+        board.active_tetromino
+        | location: {elem(board.active_tetromino.location, 0), final_y}
       }
+
       land_tetromino(%{board | active_tetromino: landed_tetromino})
     end
   end
-  
+
   # Helper to find the lowest valid y-position for a tetromino
   defp find_landing_position(tetromino, board) do
     curr_y = elem(tetromino.location, 1)
     curr_x = elem(tetromino.location, 0)
-    
-    # Try each position down until we hit an invalid one
-    Stream.iterate(curr_y, &(&1 + 1))
-    |> Stream.take(board.height)
-    |> Enum.reduce_while(curr_y, fn y, last_valid_y ->
+
+    # Find the lowest valid position by trying each position down
+    # Start from current position and keep going down until we find an invalid position
+    Enum.reduce_while(curr_y..(board.height - 1), curr_y, fn y, _acc ->
       test_tetromino = %{tetromino | location: {curr_x, y}}
+
       if valid_position?(test_tetromino, board) do
-        {:cont, y}  # Keep going down
+        # This position is valid, keep it and continue
+        {:cont, y}
       else
-        {:halt, last_valid_y}  # Stop at the last valid position
+        # This position is invalid, return the previous valid position
+        {:halt, y - 1}
       end
     end)
   end
@@ -221,11 +237,13 @@ defmodule TronTetris.Game.Board do
     new_total_lines = board.lines_cleared + lines_cleared
     new_level = calculate_level(new_total_lines, board)
 
-    # Prepare next tetromino - ensure it's different from the current next tetromino
-    current_shape = board.next_tetromino.shape
-    next_tetromino = 
+    # Prepare next tetromino - ensure it's different from the new active tetromino
+    # (which will be the current next_tetromino)
+    new_active_shape = board.next_tetromino.shape
+
+    next_tetromino =
       Stream.repeatedly(fn -> Tetromino.new() end)
-      |> Enum.find(fn t -> t.shape != current_shape end)
+      |> Enum.find(fn t -> t.shape != new_active_shape end)
 
     new_board = %{
       board
