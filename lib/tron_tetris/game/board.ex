@@ -301,8 +301,8 @@ defmodule TronTetris.Game.Board do
       shifted_landed =
         new_landed
         |> Enum.map(fn {x, y} ->
-          # Calculate how many rows above this point were cleared
-          shift = Enum.count(completed_rows, fn r -> r < y end)
+          # Calculate how many cleared rows are at or below this point
+          shift = Enum.count(completed_rows, fn r -> r >= y end)
           {x, y + shift}
         end)
         |> MapSet.new()

@@ -286,20 +286,19 @@ defmodule TronTetris.Game.BoardTest do
       assert lines_cleared == 0
     end
       test "clears a single completed line" do
-      # Create a complete line at y=19
-      landed = for x <- 0..9, do: {x, 19}
-      # Add some blocks above
-      landed = landed ++ [{0, 18}, {1, 18}]
-      landed_set = MapSet.new(landed)
+    # Create a complete line at y=19
+    landed = for x <- 0..9, do: {x, 19}
+    # Add some blocks above
+    landed = landed ++ [{0, 18}, {1, 18}]
+    landed_set = MapSet.new(landed)
 
-      {new_landed, lines_cleared} = Board.clear_lines(landed_set, 20, 10)
+    {new_landed, lines_cleared} = Board.clear_lines(landed_set, 20, 10)
 
-      assert lines_cleared == 1
-      assert MapSet.size(new_landed) == 2 # Only the blocks from y=18 should remain
-
-      # The blocks stay in place because there were no cleared rows above them
-      assert Enum.all?(new_landed, fn {_x, y} -> y == 18 end)
-    end
+    assert lines_cleared == 1
+    assert MapSet.size(new_landed) == 2 # Blocks above should shift down by 1
+    # The blocks should have moved down one row (to y=19)
+    assert Enum.all?(new_landed, fn {_x, y} -> y == 19 end)
+  end
       test "shifts blocks down after clearing lines" do
       # Create complete lines at y=18 and y=19
       landed = (for x <- 0..9, do: {x, 19}) ++ (for x <- 0..9, do: {x, 18})
@@ -312,8 +311,8 @@ defmodule TronTetris.Game.BoardTest do
       assert lines_cleared == 2
       assert MapSet.size(new_landed) == 2 # Only the blocks from y=17 should remain
 
-      # The blocks from y=17 should remain at y=17 (no rows cleared above them)
-      assert Enum.all?(new_landed, fn {_x, y} -> y == 17 end)
+      # The blocks from y=17 should have moved down two rows (to y=19)
+      assert Enum.all?(new_landed, fn {_x, y} -> y == 19 end)
     end
   end
 
