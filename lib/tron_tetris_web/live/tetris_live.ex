@@ -6,9 +6,6 @@ defmodule TronTetrisWeb.TetrisLive do
   alias TronTetris.Game.{Server, Supervisor, Tetromino}
   alias Phoenix.PubSub
 
-  # Mount the sound hooks
-  on_mount TronTetrisWeb.Live.Hooks.SoundHooks
-
   # Helper functions for the HTML template
 
   def cell_classes(x, y, board) do
@@ -123,8 +120,7 @@ defmodule TronTetrisWeb.TetrisLive do
      |> assign(:show_login_prompt, false)
      |> assign(:save_success, false)
      |> assign(:show_settings, false)
-     |> assign(:difficulty, board.difficulty || :normal)
-     |> assign(:sound, true)}
+     |> assign(:difficulty, board.difficulty || :normal)}
   end
 
   @impl true
@@ -230,12 +226,9 @@ defmodule TronTetrisWeb.TetrisLive do
         Server.set_difficulty(server, difficulty)
         {:noreply, assign(socket, :difficulty, difficulty)}
 
-      {:toggle_sound, sound_state} ->
-        # Update JS sound settings via a push_event
-        {:noreply,
-         socket
-         |> assign(:sound, sound_state)
-         |> push_event("toggle_sound", %{enabled: sound_state})}
+      {:toggle_sound, _sound_state} ->
+        # sound toggling removed
+        {:noreply, socket}
 
       :logout ->
         {:noreply, redirect(socket, to: ~p"/login")}
