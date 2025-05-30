@@ -3,23 +3,39 @@
     <h2 class="auth-title">ENTER THE GRID</h2>
     
     <%= if @error_message do %>
-      <div class="auth-error"><%= @error_message %></div>
+      <div class="auth-error">{@error_message}</div>
     <% end %>
     
     <form phx-submit="login" phx-change="validate" class="auth-form">
       <div class="form-group">
         <label for="username">USERNAME</label>
-        <input type="text" id="username" name="username" value={@changeset.username} required class="tron-input">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={@changeset.username}
+          required
+          class="tron-input"
+        />
       </div>
       
       <div class="form-group">
         <label for="password">PASSWORD</label>
-        <input type="password" id="password" name="password" value={@changeset.password} required class="tron-input">
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={@changeset.password}
+          required
+          class="tron-input"
+        />
       </div>
       
       <div class="form-actions">
         <button type="submit" class="tron-button login-button">LOGIN</button>
-        <button type="button" phx-click="register" class="tron-button register-button">REGISTER</button>
+        <button type="button" phx-click="register" class="tron-button register-button">
+          REGISTER
+        </button>
       </div>
     </form>
     

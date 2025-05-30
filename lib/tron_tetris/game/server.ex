@@ -3,19 +3,20 @@ defmodule TronTetris.Game.Server do
   GenServer implementation for the Tetris game.
   Manages the game state and timing.
   """
-  
+
   use GenServer
   alias TronTetris.Game.Board
   alias Phoenix.PubSub
 
-  @tick_interval 1000 # Default interval in milliseconds
+  # Default interval in milliseconds
+  @tick_interval 1000
 
   # Client API
   def start_link(opts \\ []) do
     name = Keyword.get(opts, :name, __MODULE__)
     GenServer.start_link(__MODULE__, opts, name: name)
   end
-  
+
   def new_game(server \\ __MODULE__, difficulty \\ :normal) do
     GenServer.call(server, {:new_game, difficulty})
   end
@@ -23,11 +24,11 @@ defmodule TronTetris.Game.Server do
   def get_state(server \\ __MODULE__) do
     GenServer.call(server, :get_state)
   end
-  
+
   def load_game(server \\ __MODULE__, board) do
     GenServer.call(server, {:load_game, board})
   end
-  
+
   def set_difficulty(server \\ __MODULE__, difficulty) do
     GenServer.call(server, {:set_difficulty, difficulty})
   end
@@ -65,19 +66,20 @@ defmodule TronTetris.Game.Server do
 
     {:ok, %{board: board, player_id: player_id, paused: false}, {:continue, :schedule_tick}}
   end
+
   @impl true
   def handle_continue(:schedule_tick, state) do
     schedule_tick(state.board.level)
     {:noreply, state}
   end
-  
+
   @impl true
   def handle_call({:new_game, difficulty}, _from, state) do
     board = Board.new(difficulty)
     broadcast_update(board, state.player_id)
     {:reply, board, %{state | board: board, paused: false}, {:continue, :schedule_tick}}
   end
-  
+
   @impl true
   def handle_call(:new_game, from, state) do
     handle_call({:new_game, :normal}, from, state)
@@ -87,12 +89,13 @@ defmodule TronTetris.Game.Server do
   def handle_call(:get_state, _from, state) do
     {:reply, {state.board, state.paused}, state}
   end
-    @impl true
+
+  @impl true
   def handle_call({:load_game, board}, _from, state) do
     broadcast_update(board, state.player_id)
     {:reply, board, %{state | board: board, paused: true}, {:continue, :schedule_tick}}
   end
-  
+
   @impl true
   def handle_call({:set_difficulty, difficulty}, _from, state) do
     new_board = %{state.board | difficulty: difficulty}
@@ -140,7 +143,7 @@ defmodule TronTetris.Game.Server do
   def handle_cast(:toggle_pause, %{paused: paused} = state) do
     # When unpausing, schedule a tick
     if paused, do: schedule_tick(state.board.level)
-    
+
     {:noreply, %{state | paused: not paused}}
   end
 
@@ -150,12 +153,12 @@ defmodule TronTetris.Game.Server do
   def handle_cast(:drop, state) do
     new_board = Board.drop(state.board)
     broadcast_update(new_board, state.player_id)
-    
+
     # Only schedule the next tick if the game isn't over
     if not new_board.game_over do
       schedule_tick(new_board.level)
     end
-    
+
     {:noreply, %{state | board: new_board}}
   end
 
@@ -174,12 +177,12 @@ defmodule TronTetris.Game.Server do
   def handle_info(:tick, state) do
     new_board = Board.drop(state.board)
     broadcast_update(new_board, state.player_id)
-    
+
     # Only schedule the next tick if the game isn't over
     if not new_board.game_over do
       schedule_tick(new_board.level)
     end
-    
+
     {:noreply, %{state | board: new_board}}
   end
 
@@ -192,14 +195,15 @@ defmodule TronTetris.Game.Server do
 
   defp schedule_tick(%{level: level, difficulty: difficulty}) do
     # Adjust base speed on difficulty
-    base_interval = case difficulty do
-      :easy -> @tick_interval + 200
-      :normal -> @tick_interval
-      :hard -> @tick_interval - 100
-      :expert -> @tick_interval - 200
-      _ -> @tick_interval
-    end
-    
+    base_interval =
+      case difficulty do
+        :easy -> @tick_interval + 200
+        :normal -> @tick_interval
+        :hard -> @tick_interval - 100
+        :expert -> @tick_interval - 200
+        _ -> @tick_interval
+      end
+
     # Apply level-based speed adjustment
     interval = max(100, base_interval - (level - 1) * 50)
     Process.send_after(self(), :tick, interval)

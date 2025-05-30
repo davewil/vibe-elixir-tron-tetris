@@ -9,54 +9,72 @@ defmodule TronTetrisWeb.Components.GameSettings do
     <div class="game-settings">
       <div class="settings-header">
         <div class="settings-title">SETTINGS</div>
-        <button type="button" class="tron-button small" phx-click="close_settings" phx-target={@myself}>CLOSE</button>
+        
+        <button
+          type="button"
+          class="tron-button small"
+          phx-click="close_settings"
+          phx-target={@myself}
+        >
+          CLOSE
+        </button>
       </div>
       
       <div class="settings-body">
         <div class="setting-group">
           <div class="setting-label">DIFFICULTY:</div>
+          
           <div class="difficulty-buttons">
-            <button 
-              type="button" 
+            <button
+              type="button"
               class={"tron-button small #{if @difficulty == :easy, do: "active"}"}
               phx-click="set_difficulty"
               phx-value-difficulty="easy"
               phx-target={@myself}
-            >EASY</button>
-            <button 
-              type="button" 
+            >
+              EASY
+            </button>
+            <button
+              type="button"
               class={"tron-button small #{if @difficulty == :normal, do: "active"}"}
               phx-click="set_difficulty"
               phx-value-difficulty="normal"
               phx-target={@myself}
-            >NORMAL</button>
-            <button 
-              type="button" 
+            >
+              NORMAL
+            </button>
+            <button
+              type="button"
               class={"tron-button small #{if @difficulty == :hard, do: "active"}"}
               phx-click="set_difficulty"
               phx-value-difficulty="hard"
               phx-target={@myself}
-            >HARD</button>
-            <button 
-              type="button" 
+            >
+              HARD
+            </button>
+            <button
+              type="button"
               class={"tron-button small #{if @difficulty == :expert, do: "active"}"}
               phx-click="set_difficulty"
               phx-value-difficulty="expert"
               phx-target={@myself}
-            >EXPERT</button>
+            >
+              EXPERT
+            </button>
           </div>
         </div>
         
         <div class="setting-group">
           <div class="setting-label">SOUND:</div>
+          
           <div class="sound-toggle">
-            <button 
-              type="button" 
+            <button
+              type="button"
               class={"tron-button small #{if @sound, do: "active"}"}
               phx-click="toggle_sound"
               phx-target={@myself}
             >
-              <%= if @sound, do: "ON", else: "OFF" %>
+              {if @sound, do: "ON", else: "OFF"}
             </button>
           </div>
         </div>
@@ -65,12 +83,15 @@ defmodule TronTetrisWeb.Components.GameSettings do
           <div class="setting-description">
             <strong>EASY</strong>: Slower speed, more forgiving scoring.
           </div>
+          
           <div class="setting-description">
             <strong>NORMAL</strong>: Classic Tetris balance.
           </div>
+          
           <div class="setting-description">
             <strong>HARD</strong>: Faster speed, higher scoring potential.
           </div>
+          
           <div class="setting-description">
             <strong>EXPERT</strong>: Maximum speed, maximum challenge!
           </div>

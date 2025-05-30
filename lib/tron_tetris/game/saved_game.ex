@@ -2,21 +2,21 @@ defmodule TronTetris.Game.SavedGame do
   @moduledoc """
   Schema for saved games.
   """
-  
+
   use Ecto.Schema
   import Ecto.Changeset
-  
+
   schema "saved_games" do
     field :game_state, :binary
     field :score, :integer
     field :level, :integer
     field :lines_cleared, :integer
-    
+
     belongs_to :player, TronTetris.Accounts.Player
-    
+
     timestamps()
   end
-  
+
   @doc """
   Changeset for creating or updating a saved game.
   """

@@ -21,7 +21,7 @@ defmodule TronTetrisWeb.Router do
     live "/tetris", TetrisLive
     live "/", TetrisLive, :index
     live "/leaderboard", LeaderboardLive
-    
+
     # Auth routes
     live "/login", Auth.LoginLive
     live "/register", Auth.RegisterLive

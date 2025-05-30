@@ -1,18 +1,24 @@
 <div class="leaderboard-container">
   <div class="tron-panel leaderboard-panel">
     <h2 class="leaderboard-title">TOP PROGRAMS</h2>
-
+    
     <div class="scores-table">
       <div class="table-header">
         <div class="col rank">#</div>
+        
         <div class="col user">USER</div>
+        
         <div class="col score">SCORE</div>
+        
         <div class="col level">LEVEL</div>
+        
         <div class="col lines">LINES</div>
+        
         <div class="col time">TIME</div>
+        
         <div class="col date">DATE</div>
       </div>
-
+      
       <%= if Enum.empty?(@top_scores) do %>
         <div class="empty-state">
           NO RECORDS FOUND
@@ -20,18 +26,24 @@
       <% else %>
         <%= for {score, index} <- Enum.with_index(@top_scores, 1) do %>
           <div class={["table-row", if(index <= 3, do: "top-#{index}")]} tabindex="0">
-            <div class="col rank"><%= index %></div>
-            <div class="col user"><%= score.username %></div>
-            <div class="col score"><%= score.score %></div>
-            <div class="col level"><%= score.level %></div>
-            <div class="col lines"><%= score.lines_cleared %></div>
-            <div class="col time"><%= format_time(score.play_time) %></div>
-            <div class="col date"><%= Calendar.strftime(score.inserted_at, "%Y-%m-%d") %></div>
+            <div class="col rank">{index}</div>
+            
+            <div class="col user">{score.username}</div>
+            
+            <div class="col score">{score.score}</div>
+            
+            <div class="col level">{score.level}</div>
+            
+            <div class="col lines">{score.lines_cleared}</div>
+            
+            <div class="col time">{format_time(score.play_time)}</div>
+            
+            <div class="col date">{Calendar.strftime(score.inserted_at, "%Y-%m-%d")}</div>
           </div>
         <% end %>
       <% end %>
     </div>
-
+    
     <div class="leaderboard-actions">
       <button class="tron-button" phx-click="back_to_game">BACK TO GAME</button>
     </div>

@@ -23,7 +23,11 @@ defmodule TronTetrisWeb.Live.Hooks.SoundHooks do
     cond do
       # Check if lines were cleared
       old_board && new_board.lines_cleared > old_board.lines_cleared ->
-        sound = if new_board.lines_cleared - old_board.lines_cleared >= 4, do: "tetris", else: "line_clear"
+        sound =
+          if new_board.lines_cleared - old_board.lines_cleared >= 4,
+            do: "tetris",
+            else: "line_clear"
+
         {:halt, push_event(socket, "play_sound", %{name: sound})}
 
       # Check if level increased

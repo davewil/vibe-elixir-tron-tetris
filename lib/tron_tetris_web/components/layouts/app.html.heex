@@ -1,13 +1,16 @@
 <header class="px-4 sm:px-6 lg:px-8 bg-[#060B1A] border-b border-[#00BFFF] py-3">
   <div class="flex items-center justify-center">
-    <div class="text-[#00BFFF] text-2xl font-orbitron font-bold" style="text-shadow: 0 0 10px #00BFFF;">
+    <div
+      class="text-[#00BFFF] text-2xl font-orbitron font-bold"
+      style="text-shadow: 0 0 10px #00BFFF;"
+    >
       TRON TETRIS
     </div>
   </div>
 </header>
+
 <main class="px-4 py-10 sm:px-6 lg:px-8 bg-[#060B1A] min-h-screen">
   <div class="mx-auto max-w-5xl">
-    <.flash_group flash={@flash} />
-    {@inner_content}
+    <.flash_group flash={@flash} /> {@inner_content}
   </div>
 </main>

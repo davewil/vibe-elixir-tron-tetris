@@ -55,7 +55,11 @@ defmodule TronTetris.Game.Tetromino do
   @doc """
   Returns the absolute coordinates of a tetromino.
   """
-  def to_absolute_coordinates(%{points: points, location: {offset_x, offset_y}, rotation: rotation}) do
+  def to_absolute_coordinates(%{
+        points: points,
+        location: {offset_x, offset_y},
+        rotation: rotation
+      }) do
     points
     |> rotate_points(rotation)
     |> Enum.map(fn {x, y} -> {x + offset_x, y + offset_y} end)
@@ -68,7 +72,7 @@ defmodule TronTetris.Game.Tetromino do
   def rotate_points(points, 1), do: points |> Enum.map(fn {x, y} -> {-y, x} end)
   def rotate_points(points, 2), do: points |> Enum.map(fn {x, y} -> {-x, -y} end)
   def rotate_points(points, 3), do: points |> Enum.map(fn {x, y} -> {y, -x} end)
-  
+
   @doc """
   Returns the color for a tetromino shape.
   """

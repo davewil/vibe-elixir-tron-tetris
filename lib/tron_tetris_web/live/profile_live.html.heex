@@ -1,24 +1,29 @@
 <div class="profile-container">
   <div class="tron-panel profile-panel">
     <div class="profile-header">
-      <h2 class="profile-title"><%= @player.username %>'S PROFILE</h2>
+      <h2 class="profile-title">{@player.username}'S PROFILE</h2>
+      
       <div class="profile-details">
         <div class="detail">
           <span class="label">TOTAL GAMES:</span>
-          <span class="value"><%= length(@high_scores) %></span>
+          <span class="value">{length(@high_scores)}</span>
         </div>
         
         <div class="detail">
           <span class="label">BEST SCORE:</span>
           <span class="value">
-            <%= if Enum.empty?(@high_scores), do: 0, else: Enum.max_by(@high_scores, & &1.score).score %>
+            {if Enum.empty?(@high_scores),
+              do: 0,
+              else: Enum.max_by(@high_scores, & &1.score).score}
           </span>
         </div>
         
         <div class="detail">
           <span class="label">BEST LEVEL:</span>
           <span class="value">
-            <%= if Enum.empty?(@high_scores), do: 0, else: Enum.max_by(@high_scores, & &1.level).level %>
+            {if Enum.empty?(@high_scores),
+              do: 0,
+              else: Enum.max_by(@high_scores, & &1.level).level}
           </span>
         </div>
       </div>
@@ -33,19 +38,27 @@
         <div class="scores-table">
           <div class="table-header">
             <div class="col score">SCORE</div>
+            
             <div class="col level">LEVEL</div>
+            
             <div class="col lines">LINES</div>
+            
             <div class="col time">TIME</div>
+            
             <div class="col date">DATE</div>
           </div>
           
           <%= for score <- Enum.take(@high_scores, 5) do %>
             <div class="table-row">
-              <div class="col score"><%= score.score %></div>
-              <div class="col level"><%= score.level %></div>
-              <div class="col lines"><%= score.lines_cleared %></div>
-              <div class="col time"><%= format_time(score.play_time_seconds) %></div>
-              <div class="col date"><%= format_date(score.inserted_at) %></div>
+              <div class="col score">{score.score}</div>
+              
+              <div class="col level">{score.level}</div>
+              
+              <div class="col lines">{score.lines_cleared}</div>
+              
+              <div class="col time">{format_time(score.play_time_seconds)}</div>
+              
+              <div class="col date">{format_date(score.inserted_at)}</div>
             </div>
           <% end %>
         </div>

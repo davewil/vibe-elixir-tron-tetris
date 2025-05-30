@@ -2,22 +2,22 @@ defmodule TronTetris.Game.HighScore do
   @moduledoc """
   Schema for high scores.
   """
-  
+
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query
-  
+
   schema "high_scores" do
     field :score, :integer
     field :level, :integer
     field :lines_cleared, :integer
     field :play_time_seconds, :integer
-    
+
     belongs_to :player, TronTetris.Accounts.Player
-    
+
     timestamps()
   end
-  
+
   @doc """
   Changeset for creating or updating a high score.
   """
@@ -31,7 +31,7 @@ defmodule TronTetris.Game.HighScore do
     |> validate_number(:play_time_seconds, greater_than_or_equal_to: 0)
     |> foreign_key_constraint(:player_id)
   end
-  
+
   @doc """
   Query to get top high scores.
   """

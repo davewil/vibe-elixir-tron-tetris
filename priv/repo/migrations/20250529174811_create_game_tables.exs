@@ -7,7 +7,7 @@ defmodule TronTetris.Repo.Migrations.CreateGameTables do
       add :username, :string, null: false
       add :email, :string
       add :hashed_password, :string
-      
+
       timestamps()
     end
 
@@ -21,7 +21,7 @@ defmodule TronTetris.Repo.Migrations.CreateGameTables do
       add :level, :integer, null: false
       add :lines_cleared, :integer, null: false
       add :play_time_seconds, :integer, null: false
-      
+
       timestamps()
     end
 
@@ -31,11 +31,12 @@ defmodule TronTetris.Repo.Migrations.CreateGameTables do
     # Create saved games table
     create table(:saved_games) do
       add :player_id, references(:players, on_delete: :delete_all), null: false
-      add :game_state, :binary, null: false  # Stored as serialized binary
+      # Stored as serialized binary
+      add :game_state, :binary, null: false
       add :score, :integer, null: false
       add :level, :integer, null: false
       add :lines_cleared, :integer, null: false
-      
+
       timestamps()
     end
 

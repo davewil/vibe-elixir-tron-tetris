@@ -1,19 +1,18 @@
-<div class="tetris-container" 
-    phx-window-keydown="keydown"
-    tabindex="0"
-    data-game-id={@player_id}>
-
-  <.live_component module={TronTetrisWeb.Components.GameMenu} 
-    id="game-menu" 
-    player={@player} 
+<div class="tetris-container" phx-window-keydown="keydown" tabindex="0" data-game-id={@player_id}>
+  <.live_component
+    module={TronTetrisWeb.Components.GameMenu}
+    id="game-menu"
+    player={@player}
     paused={@paused}
-    save_success={@save_success || false} />
-  
+    save_success={@save_success || false}
+  />
   <div class="game-header">
     <div class="game-info">
-      <div class="score">SCORE: <%= @board.score %></div>
-      <div class="level">LEVEL: <%= @board.level %></div>
-      <div class="lines">LINES: <%= @board.lines_cleared %></div>
+      <div class="score">SCORE: {@board.score}</div>
+      
+      <div class="level">LEVEL: {@board.level}</div>
+      
+      <div class="lines">LINES: {@board.lines_cleared}</div>
     </div>
   </div>
   
@@ -32,11 +31,11 @@
       <%= if @board.game_over do %>
         <div class="game-over">
           <div class="game-over-text">GAME OVER</div>
-          <button phx-click="new_game" class="tron-button">PLAY AGAIN</button>
+           <button phx-click="new_game" class="tron-button">PLAY AGAIN</button>
         </div>
       <% end %>
       
-    <%= if @paused and !@board.game_over do %>
+      <%= if @paused and !@board.game_over do %>
         <div class="game-paused">
           <div class="paused-text">PAUSED</div>
         </div>
@@ -46,32 +45,41 @@
     <div class="game-sidebar">
       <div class="next-piece-container">
         <h3>NEXT</h3>
+        
         <div class="next-piece">
-          <%= render_next_tetromino(@board.next_tetromino) %>
+          {render_next_tetromino(@board.next_tetromino)}
         </div>
       </div>
       
       <div class="instructions">
         <h3>CONTROLS</h3>
+        
         <ul>
           <li>← MOVE LEFT</li>
+          
           <li>→ MOVE RIGHT</li>
+          
           <li>↑ ROTATE</li>
+          
           <li>↓ DROP</li>
+          
           <li>SPACE/P: PAUSE</li>
+          
           <li>R: RESTART</li>
         </ul>
       </div>
     </div>
   </div>
-
+  
   <%= if @show_settings do %>
     <div class="modal-overlay" phx-click="close_settings" phx-window-keydown="modal_escape">
       <div phx-click="noop" phx-window-keydown="noop" style="outline:none;" tabindex="0">
-        <.live_component module={TronTetrisWeb.Components.GameSettings}
+        <.live_component
+          module={TronTetrisWeb.Components.GameSettings}
           id="game-settings"
           difficulty={@difficulty}
-          sound={@sound} />
+          sound={@sound}
+        />
       </div>
     </div>
   <% end %>

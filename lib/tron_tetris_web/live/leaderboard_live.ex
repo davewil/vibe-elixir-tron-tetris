@@ -15,10 +15,11 @@ defmodule TronTetrisWeb.LeaderboardLive do
 
     top_scores = ScoreService.get_top_scores(20)
 
-    {:ok, assign(socket, 
-      page_title: "Leaderboard", 
-      top_scores: top_scores
-    )}
+    {:ok,
+     assign(socket,
+       page_title: "Leaderboard",
+       top_scores: top_scores
+     )}
   end
 
   @impl true
