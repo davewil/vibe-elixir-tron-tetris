@@ -21,41 +21,27 @@ defmodule TronTetris.Game.GameOverDebugTest do
       active_tetromino: %{Tetromino.new(:o) | location: {0, 0}, rotation: 0}  # O piece at top left
     }
 
-    IO.puts("Initial board setup:")
-    IO.puts("Landed blocks count: #{MapSet.size(board_with_blocks.landed_tetrominos)}")
-    IO.puts("Active tetromino: #{inspect(board_with_blocks.active_tetromino)}")
 
     # Check if the active tetromino is in a valid position
     is_valid = Board.valid_position?(board_with_blocks.active_tetromino, board_with_blocks)
-    IO.puts("Is initial tetromino position valid? #{is_valid}")    # Check what coordinates the O piece occupies
     coords = Tetromino.to_absolute_coordinates(board_with_blocks.active_tetromino)
-    IO.puts("O tetromino coordinates: #{inspect(coords)}")
 
     # Check if any of these coordinates conflict with landed blocks
     conflicts = Enum.filter(coords, fn coord -> MapSet.member?(board_with_blocks.landed_tetrominos, coord) end)
-    IO.puts("Conflicts with landed blocks: #{inspect(conflicts)}")
 
     # Check the bounds
     out_of_bounds = Enum.filter(coords, fn {x, y} -> x < 0 || x >= 10 || y < 0 || y >= 20 end)
-    IO.puts("Coordinates out of bounds: #{inspect(out_of_bounds)}")
 
     # Check what's at the spawn location {4, 0}
     spawn_blocked = MapSet.member?(board_with_blocks.landed_tetrominos, {4, 0})
-    IO.puts("Is spawn location {4, 0} blocked? #{spawn_blocked}")
 
     # Try hard dropping the piece
-    IO.puts("\nTesting hard drop...")
     dropped_board = Board.hard_drop(board_with_blocks)
-    IO.puts("Game over after hard drop? #{dropped_board.game_over}")
-    IO.puts("Lines cleared: #{dropped_board.lines_cleared}")
-    IO.puts("New active tetromino: #{inspect(dropped_board.active_tetromino)}")
 
     # If not game over, check the new tetromino's validity
     if not dropped_board.game_over do
       new_tetromino_valid = Board.valid_position?(dropped_board.active_tetromino, dropped_board)
-      IO.puts("New tetromino position valid? #{new_tetromino_valid}")
       new_coords = Tetromino.to_absolute_coordinates(dropped_board.active_tetromino)
-      IO.puts("New tetromino coordinates: #{inspect(new_coords)}")
     end
   end
 end

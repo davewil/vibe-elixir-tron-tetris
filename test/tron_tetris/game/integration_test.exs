@@ -103,7 +103,6 @@ defmodule TronTetris.Game.IntegrationTest do
     # Calculate moves to reach the target position
     moves_right = target_x - elem(current_pos, 0)
 
-    IO.puts("Current position: #{inspect(current_pos)}, Target X: #{target_x}, Moves right: #{moves_right}")
 
     if moves_right < 0 do
       # Need to move left
@@ -140,7 +139,6 @@ defmodule TronTetris.Game.IntegrationTest do
     end
       # Log final position for debugging
     {board_final, _} = Server.get_state(server)
-    IO.puts("Final position before drop: #{inspect(board_final.active_tetromino.location)}, rotation: #{board_final.active_tetromino.rotation}")
   end
 
   defp create_board_almost_game_over do

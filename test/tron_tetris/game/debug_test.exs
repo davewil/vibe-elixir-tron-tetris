@@ -9,8 +9,6 @@ defmodule TronTetris.Game.DebugTest do
     board = %{Board.new() | active_tetromino: tetromino}
 
     # Print the initial state
-    IO.puts "Original tetromino: #{inspect(tetromino)}"
-    IO.puts "Original tetromino points: #{inspect(Tetromino.to_absolute_coordinates(tetromino))}"
 
     # Directly create a deep copy of tetromino to ensure it's fully independent
     tetromino_copy = %{
@@ -21,16 +19,12 @@ defmodule TronTetris.Game.DebugTest do
     }
 
     # Check that our copy is truly independent
-    IO.puts "Tetromino copy: #{inspect(tetromino_copy)}"
-    IO.puts "Copy equals original? #{tetromino_copy == tetromino}"
 
     # Update board with our deep copy
     board = %{board | active_tetromino: tetromino_copy}
 
     # Call Board.rotate and check the result
     rotated_board = Board.rotate(board)
-    IO.puts "Input active_tetromino: #{inspect(board.active_tetromino)}"
-    IO.puts "Result active_tetromino: #{inspect(rotated_board.active_tetromino)}"
       # Since the I tetromino at position {9, 0} would have pieces outside
     # the board when rotated to rotation 1, it should stay at rotation 0
     # But if the rotate function is working correctly, it should still
