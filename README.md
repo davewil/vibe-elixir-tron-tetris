@@ -32,35 +32,35 @@ No traditional REST API endpoints are exposed for direct consumption as the game
 
 ```mermaid
 graph TD
-    A[Game Starts/New Piece] --> B{Piece Falling};
-    B -- User Input --> C{Move/Rotate};
+    A["Game Starts/New Piece"] --> B{"Piece Falling"};
+    B -- User Input --> C{"Move/Rotate"};
     C --> B;
-    B -- Tick --> D{Attempt Move Down};
+    B -- Tick --> D{"Attempt Move Down"};
     D -- Valid Position --> B;
-    D -- Invalid Position/Collision --> E{Land Piece};
-    E --> F{Check for Line Clears};
-    F -- Lines Cleared --> G[Update Score/Level, Shift Blocks];
-    G --> H{Spawn New Piece};
+    D -- Invalid Position/Collision --> E{"Land Piece"};
+    E --> F{"Check for Line Clears"};
+    F -- Lines Cleared --> G["Update Score/Level, Shift Blocks"];
+    G --> H{"Spawn New Piece"};
     F -- No Lines Cleared --> H;
     H -- Valid Spawn --> B;
-    H -- Invalid Spawn (Game Over) --> I[Game Over State];
+    H -- Invalid Spawn (Game Over) --> I["Game Over State"];
 ```
 
 ### User Interaction Flow (LiveView)
 
 ```mermaid
 graph TD
-    J[User Visits /tetris] --> K[TetrisLive Mounts];
-    K --> L{"Game Server (GenServer) Started and State Loaded"};
-    L --> M[Game Board Rendered];
-    M -- User Key Press (e.g., Arrow Keys, Space) --> N{keydown Event (TetrisLive)};
-    N --> O[Server.handle_cast (e.g., move_left, rotate, drop, toggle_pause)];
-    O --> P{Board Module Updates Game State};
-    P --> Q[PubSub Broadcasts :tetris_update];
-    Q --> R{handle_info :tetris_update (TetrisLive)};
+    J["User Visits /tetris"] --> K["TetrisLive Mounts"];
+    K --> L["Game Server (GenServer) Started and State Loaded"];
+    L --> M["Game Board Rendered"];
+    M -- User Key Press (e.g., Arrow Keys, Space) --> N{"keydown Event (TetrisLive)"};
+    N --> O["Server.handle_cast (e.g., move_left, rotate, drop, toggle_pause)"];
+    O --> P{"Board Module Updates Game State"};
+    P --> Q["PubSub Broadcasts :tetris_update"];
+    Q --> R{"handle_info :tetris_update (TetrisLive)"};
     R --> M;
-    M -- User Clicks "New Game" --> S{handle_event "new_game" (TetrisLive)};
-    S --> T[Server.new_game];
+    M -- User Clicks "New Game" --> S{"handle_event &quot;new_game&quot; (TetrisLive)"};
+    S --> T["Server.new_game"];
     T --> P;
 ```
 
