@@ -51,7 +51,7 @@ graph TD
 ```mermaid
 graph TD
     J[User Visits /tetris] --> K[TetrisLive Mounts];
-    K --> L{Game Server (GenServer) Started and State Loaded};
+    K --> L{"Game Server (GenServer) Started and State Loaded"};
     L --> M[Game Board Rendered];
     M -- User Key Press (e.g., Arrow Keys, Space) --> N{keydown Event (TetrisLive)};
     N --> O[Server.handle_cast (e.g., move_left, rotate, drop, toggle_pause)];
