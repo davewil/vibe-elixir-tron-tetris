@@ -59,7 +59,7 @@ graph TD
     P --> Q["PubSub Broadcasts :tetris_update"];
     Q --> R{"handle_info :tetris_update (TetrisLive)"};
     R --> M;
-    M -- User Clicks "New Game" --> S{"handle_event &quot;new_game&quot; (TetrisLive)"};
+    M -->|"User Clicks &quot;New Game&quot;"| S{"handle_event &quot;new_game&quot; (TetrisLive)"};
     S --> T["Server.new_game"];
     T --> P;
 ```
